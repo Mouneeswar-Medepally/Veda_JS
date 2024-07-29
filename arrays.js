@@ -251,15 +251,13 @@ Use Case: Aggregating array values into a single value (e.g., summing numbers, f
 
 //filter
 
-const arr=[11,2,22,1];
-[2,11,22,1];
-[22,11,2,1]
-arr.sort((a, b) => {
-    console.log(a,b);
-    // return b-a
-    return b-a
-});
-console.log(arr);
+// const arr=[11,2,22,1];
+//negative -  a comes before b
+//positive -  a comes after b;
+// arr.sort((a, b) => {
+//     return a-b
+// });
+// console.log(arr);
 // const filteredArr=arr.filter((elem)=>{
 //     if(elem!==2){
 //         return elem
