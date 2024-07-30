@@ -135,7 +135,8 @@ The `className` property allows you to get or set the entire class attribute of 
 
 ### 3. **Element.classList Property**
 
-The `classList` property provides a convenient way to work with an element's classes. It returns a DOMTokenList that allows you to manipulate classes without affecting other classes.
+The `classList` property provides a convenient way to work with an element's classes. 
+It returns a DOMTokenList that allows you to manipulate classes without affecting other classes.
 
 - **Adding Classes**:
   ```javascript
@@ -486,6 +487,171 @@ In addition to the commonly used `addEventListener` and `removeEventListener` me
      </body>
      </html>
      ```
+
+JavaScript HTML DOM Collections:
+
+An HTMLCollection object is an array-like list (collection) of HTML elements.
+The elements in the collection can be accessed by an index number.
+
+An HTMLCollection is NOT an array!
+
+An HTMLCollection may look like an array, but it is not.
+
+You can loop through the list and refer to the elements with a number (just like an array).
+
+However, you cannot use array methods like valueOf(), pop(), push(), or join() on an HTMLCollection.
+
+
+The HTML DOM NodeList Object:
+
+A NodeList object is a list (collection) of nodes extracted from a document.
+
+A NodeList object is almost the same as an HTMLCollection object.
+
+Some (older) browsers return a NodeList object instead of an HTMLCollection for methods like getElementsByClassName().
+
+All browsers return a NodeList object for the property childNodes. 
+
+Most browsers return a NodeList object for the method querySelectorAll().
+
+
+The Difference Between an HTMLCollection and a NodeList:
+A NodeList and an HTMLcollection is very much the same thing.
+
+Both are array-like collections (lists) of nodes (elements) extracted from a document. The nodes can be accessed by index numbers. The index starts at 0.
+
+Both have a length property that returns the number of elements in the list (collection).
+
+An HTMLCollection is a collection of document elements.
+
+A NodeList is a collection of document nodes (element nodes, attribute nodes, and text nodes).
+
+HTMLCollection items can be accessed by their name, id, or index number.
+
+NodeList items can only be accessed by their index number.
+
+An HTMLCollection is always a live collection. Example: If you add a <li> element to a list in the DOM, the list in the HTMLCollection will also change.
+
+A NodeList is most often a static collection. Example: If you add a <li> element to a list in the DOM, the list in NodeList will not change.
+
+The getElementsByClassName() and getElementsByTagName() methods return a live HTMLCollection.
+
+The querySelectorAll() method returns a static NodeList.
+
+The childNodes property returns a live NodeList.
+
+
+other methods:
+
+In JavaScript, the `insertAdjacentHTML`, `insertAdjacentText`, and `insertAdjacentElement` methods allow you to insert content into the DOM at specified positions relative to an element. Here are the differences and examples of each:
+
+### `insertAdjacentHTML`
+
+The `insertAdjacentHTML` method parses the specified text as HTML and inserts the resulting nodes into the DOM at a specified position.
+
+```javascript
+element.insertAdjacentHTML(position, text);
+```
+
+- **Position values**:
+  - `"beforebegin"`: Before the element itself.
+  - `"afterbegin"`: Just inside the element, before its first child.
+  - `"beforeend"`: Just inside the element, after its last child.
+  - `"afterend"`: After the element itself.
+
+**Example**:
+```javascript
+let element = document.getElementById('myElement');
+element.insertAdjacentHTML('beforebegin', '<p>Inserted HTML before the element</p>');
+```
+
+### `insertAdjacentText`
+
+The `insertAdjacentText` method inserts the given text node at a specified position relative to the element. Unlike `insertAdjacentHTML`, this method does not parse the text as HTML.
+
+```javascript
+element.insertAdjacentText(position, text);
+```
+
+- **Position values**:
+  - `"beforebegin"`: Before the element itself.
+  - `"afterbegin"`: Just inside the element, before its first child.
+  - `"beforeend"`: Just inside the element, after its last child.
+  - `"afterend"`: After the element itself.
+
+**Example**:
+```javascript
+let element = document.getElementById('myElement');
+element.insertAdjacentText('beforebegin', 'Inserted text before the element');
+```
+
+### `insertAdjacentElement`
+
+The `insertAdjacentElement` method inserts the specified element at a specified position relative to the element.
+
+```javascript
+element.insertAdjacentElement(position, newElement);
+```
+
+- **Position values**:
+  - `"beforebegin"`: Before the element itself.
+  - `"afterbegin"`: Just inside the element, before its first child.
+  - `"beforeend"`: Just inside the element, after its last child.
+  - `"afterend"`: After the element itself.
+
+**Example**:
+```javascript
+let element = document.getElementById('myElement');
+let newElement = document.createElement('div');
+newElement.textContent = 'Inserted element';
+element.insertAdjacentElement('beforebegin', newElement);
+```
+
+### Summary of Differences
+
+- **`insertAdjacentHTML`**: Inserts HTML content. The string is parsed as HTML, so it can include HTML tags.
+- **`insertAdjacentText`**: Inserts plain text. The string is not parsed as HTML, so HTML tags will be treated as plain text.
+- **`insertAdjacentElement`**: Inserts an existing element. You need to create the element before inserting it.
+
+### Examples with HTML Structure
+
+Given the following HTML structure:
+
+```html
+<div id="container">
+    <div id="myElement">Hello, World!</div>
+</div>
+```
+
+Using these methods:
+
+```javascript
+let element = document.getElementById('myElement');
+
+// Using insertAdjacentHTML
+element.insertAdjacentHTML('beforebegin', '<p>HTML before the element</p>');
+
+// Using insertAdjacentText
+element.insertAdjacentText('afterbegin', 'Text after begin');
+
+// Using insertAdjacentElement
+let newElement = document.createElement('div');
+newElement.textContent = 'Element after the element';
+element.insertAdjacentElement('afterend', newElement);
+```
+
+Will result in the following HTML structure:
+
+```html
+<div id="container">
+    <p>HTML before the element</p>
+    <div id="myElement">
+        Text after begin
+        Hello, World!
+    </div>
+    <div>Element after the element</div>
+</div>
+```
 */
 
 // const myDiv=document.getElementById('myDiv');
@@ -517,10 +683,17 @@ In addition to the commonly used `addEventListener` and `removeEventListener` me
 // div2.innerText='Everyone'
 // document.body.insertBefore(div2, myDiv);
 
-const myDiv=document.getElementById('myDiv');
+// const myDiv=document.getElementById('myDiv');
+// myDiv.ins
 // document.body.removeChild(myDiv)
 // myDiv.remove()
 // const div2=document.createElement('div');
 // document.body.appendChild(div2)
 // document.body.replaceChild(document.createElement('div'),myDiv)
 // const div2 = document.createElement('div');
+
+// const myDiv=document.querySelector('#myDiv');
+// myDiv.classList.add('myClass2')
+// myDiv.classList.remove('myClass1')
+// myDiv.classList.toggle('myClass1')
+// console.log(myDiv.classList.contains('myClass2'))
