@@ -163,7 +163,8 @@ document.getElementById('child').addEventListener('click', function() {
 
 ### 5. **Event Delegation**
 
-Event delegation is a technique where a single event listener is added to a parent element to manage events for multiple child elements. 
+Event delegation is a technique where a single event listener is added to a 
+parent element to manage events for multiple child elements. 
 This is efficient and helps manage dynamic content.
 
 #### Example of Event Delegation:
@@ -324,9 +325,43 @@ document.getElementById('myButton').addEventListener('click', function(event) {
 // document.body.addEventListener('click', function() {
 //   console.log("body clicked")
 // });
-document.getElementById('myList').addEventListener('click', function(e) {
-  console.log(e.currentTarget,e.target)
-},true);
+// document.getElementById('myList').addEventListener('click', function(e) {
+//   console.log("List clicked")
+// },true);
 // document.getElementsByTagName('li')[2].addEventListener('click', function() {
 //   console.log("last item clicked")
 // });
+
+// document.getElementById('submit').onclick = function() {
+//   console.log('Button clicked 1!');
+// };
+
+// document.getElementById('submit').onclick = function() {
+//   console.log('Button clicked 2!');
+// };
+
+// document.getElementById('submit').addEventListener('click', function() {
+//     console.log("Button clicked 1")
+//   });
+
+//   document.getElementById('submit').addEventListener('click', function() {
+//     console.log("Button clicked 2")
+//   });
+// document.body.addEventListener('click',()=>{
+//   console.log('body')
+// },true)
+// document.getElementById('myList').addEventListener('click', function(e) {
+//   // e.stopPropagation()
+//     console.log("List clicked")
+//   },true);
+
+//Event delegation:
+document.getElementById('myList').addEventListener('click', function (e) {
+  e.preventDefault()
+  const navItem = e.target;
+  const path = navItem.getAttribute('href');
+  if(path){
+    window.location.href = path
+  }
+
+});
