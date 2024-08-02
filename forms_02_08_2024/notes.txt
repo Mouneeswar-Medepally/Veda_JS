@@ -1,0 +1,305 @@
+The FormData API is a powerful tool for working with form data. 
+It provides a way to construct a set of key/value pairs representing form fields 
+and their values, 
+which can then be sent using `XMLHttpRequest` or `fetch` to process form submissions.
+
+### Creating FormData Objects
+
+You can create a FormData object using the `FormData` constructor. There are two common ways to do this:
+
+1. **Creating an empty FormData object:**
+   ```javascript
+   let formData = new FormData();
+   ```
+
+2. **Creating a FormData object from an existing form element:**
+   ```javascript
+   let form = document.querySelector('form');
+   let formData = new FormData(form);
+   ```
+
+### Methods of FormData
+
+1. **`append`**
+   Adds a new key/value pair to the FormData object.
+   ```javascript
+   formData.append('username', 'JohnDoe');
+   formData.append('avatar', fileInputElement.files[0]);  // For file inputs
+   ```
+
+2. **`delete`**
+   Removes a key/value pair from the FormData object.
+   ```javascript
+   formData.delete('username');
+   ```
+
+3. **`get`**
+   Returns the first value associated with a given key.
+   ```javascript
+   let username = formData.get('username');
+   ```
+
+4. **`getAll`**
+   Returns all the values associated with a given key.
+   ```javascript
+   let allUsernames = formData.getAll('username');
+   ```
+
+5. **`has`**
+   Checks if a key exists in the FormData object.
+   ```javascript
+   if (formData.has('username')) {
+     // Do something
+   }
+   ```
+
+6. **`set`**
+   Sets a new value for an existing key or adds the key if it does not exist.
+   ```javascript
+   formData.set('username', 'JaneDoe');
+   ```
+
+7. **`entries`**
+   Returns an iterator allowing you to go through all key/value pairs in the FormData object.
+   ```javascript
+   for (let [key, value] of formData.entries()) {
+     console.log(`${key}: ${value}`);
+   }
+   ```
+
+8. **`keys`**
+   Returns an iterator allowing you to go through all keys in the FormData object.
+   ```javascript
+   for (let key of formData.keys()) {
+     console.log(key);
+   }
+   ```
+
+9. **`values`**
+   Returns an iterator allowing you to go through all values in the FormData object.
+   ```javascript
+   for (let value of formData.values()) {
+     console.log(value);
+   }
+   ```
+
+### Using FormData with `fetch`
+
+FormData is often used with `fetch` to submit form data via an HTTP request.
+
+#### Example:
+
+HTML Form:
+```html
+<form id="myForm">
+  <input type="text" name="username" value="JohnDoe">
+  <input type="file" name="avatar">
+  <button type="submit">Submit</button>
+</form>
+```
+
+JavaScript:
+```javascript
+document.getElementById('myForm').addEventListener('submit', function(event) {
+  event.preventDefault();  // Prevent the default form submission
+
+  let form = event.target;
+  let formData = new FormData(form);
+
+  fetch('https://example.com/submit', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+});
+```
+
+### Handling Files with FormData
+
+When dealing with file uploads, FormData makes it easy to include file inputs in the form submission.
+
+#### Example:
+```html
+<input type="file" id="fileInput">
+```
+
+JavaScript:
+```javascript
+let formData = new FormData();
+let fileInput = document.getElementById('fileInput');
+formData.append('file', fileInput.files[0]);
+
+fetch('https://example.com/upload', {
+  method: 'POST',
+  body: formData
+})
+.then(response => response.json())
+.then(data => {
+  console.log(data);
+})
+.catch(error => {
+  console.error('Error:', error);
+});
+```
+
+### Advantages of Using FormData
+
+- **Simplifies Form Submission**: Automatically handles encoding of form data, including file uploads.
+- **Flexibility**: Can be used with any form, even those that do not exist in the DOM.
+- **Compatibility**: Works well with modern JavaScript APIs like `fetch` and `XMLHttpRequest`.
+
+### Conclusion
+
+The FormData API is a versatile and efficient way to handle form submissions, especially when dealing with file uploads or dynamically created forms. By leveraging its methods, you can easily manipulate form data and send it to the server in a structured and secure manner.
+
+
+Regular expressions (regex) in JavaScript are powerful tools for pattern matching 
+and text manipulation. 
+
+### 1. Basics of Regular Expressions
+
+A regular expression is a sequence of characters that defines a search pattern. 
+This pattern can be used for searching, replacing, and extracting information from strings.
+
+### 2. Creating Regular Expressions
+
+There are two ways to create a regular expression in JavaScript:
+
+1. **Using a literal notation**:
+   ```javascript
+   let regex = /pattern/flags;
+   ```
+   Example:
+   ```javascript
+   let regex = /hello/i;  // 'i' flag makes the search case-insensitive
+   ```
+
+2. **Using the `RegExp` constructor**:
+   ```javascript
+   let regex = new RegExp('pattern', 'flags');
+   ```
+   Example:
+   ```javascript
+   let regex = new RegExp('hello', 'i');  // 'i' flag makes the search case-insensitive
+   ```
+
+### 3. Flags
+
+Flags modify the behavior of the regex. Common flags include:
+- `g`: Global search (find all matches)
+- `i`: Case-insensitive search
+- `m`: Multi-line search
+
+### 4. Common Regex Patterns
+
+- `^`: Matches the beginning of the string
+- `$`: Matches the end of the string
+- `.`: Matches any character except newline
+- `*`: Matches 0 or more occurrences of the preceding element
+- `+`: Matches 1 or more occurrences of the preceding element
+- `?`: Matches 0 or 1 occurrence of the preceding element
+- `\d`: Matches any digit (equivalent to `[0-9]`)
+- `\w`: Matches any word character (alphanumeric plus underscore)
+- `\s`: Matches any whitespace character (space, tab, newline)
+- `[...]`: Matches any one of the characters inside the brackets
+- `(x|y)`: Matches either `x` or `y`
+- `\b`: Matches a word boundary
+- `\`: Escapes a special character
+
+### 5. Methods of `RegExp` Objects
+
+1. **`test`**: Tests for a match in a string. Returns `true` or `false`.
+   ```javascript
+   let regex = /hello/i;
+   console.log(regex.test('Hello world'));  // true
+   ```
+
+2. **`exec`**: Executes a search for a match in a string. Returns an array of matched results or `null`.
+   ```javascript
+   let regex = /hello/i;
+   let result = regex.exec('Hello world');
+   console.log(result);  // ["Hello", index: 0, input: "Hello world", groups: undefined]
+   ```
+
+### 6. Methods of `String` Objects
+
+1. **`match`**: Retrieves the matches when matching a string against a regex. Returns an array or `null`.
+   ```javascript
+   let str = 'Hello world';
+   let matches = str.match(/hello/i);
+   console.log(matches);  // ["Hello", index: 0, input: "Hello world", groups: undefined]
+   ```
+
+2. **`matchAll`**: Returns an iterator of all matches. Returns an iterator with arrays.
+   ```javascript
+   let str = 'test1test2';
+   let regex = /test/g;
+   for (const match of str.matchAll(regex)) {
+     console.log(match);
+   }
+   // ["test", index: 0, input: "test1test2", groups: undefined]
+   // ["test", index: 5, input: "test1test2", groups: undefined]
+   ```
+
+3. **`search`**: Tests for a match in a string. Returns the index of the match or `-1`.
+   ```javascript
+   let str = 'Hello world';
+   let index = str.search(/hello/i);
+   console.log(index);  // 0
+   ```
+
+4. **`replace`**: Executes a search for a match in a string, and replaces the matched substring with a replacement substring.
+   ```javascript
+   let str = 'Hello world';
+   let newStr = str.replace(/hello/i, 'Hi');
+   console.log(newStr);  // Hi world
+   ```
+
+5. **`split`**: Splits a string into an array of substrings using a regex as a delimiter.
+   ```javascript
+   let str = 'apple,banana,orange';
+   let fruits = str.split(/,/);
+   console.log(fruits);  // ["apple", "banana", "orange"]
+   ```
+
+### 7. Examples
+
+1. **Validating an Email**:
+   ```javascript
+   function validateEmail(email) {
+     let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+     return regex.test(email);
+   }
+   console.log(validateEmail('test@example.com'));  // true
+   console.log(validateEmail('invalid-email'));     // false
+   ```
+
+2. **Extracting Numbers from a String**:
+   ```javascript
+   let str = 'There are 123 apples and 456 oranges.';
+   let numbers = str.match(/\d+/g);
+   console.log(numbers);  // ["123", "456"]
+   ```
+
+3. **Replacing Multiple Spaces with a Single Space**:
+   ```javascript
+   let str = 'This  is   a  test.';
+   let newStr = str.replace(/\s+/g, ' ');
+   console.log(newStr);  // "This is a test."
+   ```
+
+4. **Checking for a Strong Password**:
+   ```javascript
+   function isStrongPassword(password) {
+     let regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+     return regex.test(password);
+   }
+   console.log(isStrongPassword('Aa1@strong'));  // true
+   console.log(isStrongPassword('weakpass'));    // false
+   ```

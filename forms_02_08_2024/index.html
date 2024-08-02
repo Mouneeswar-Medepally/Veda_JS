@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./script.js" defer></script>
+</head>
+<body>
+   
+    <form style="display: flex; flex-direction: column; gap:16px">
+        <input type="text" name="userName" id="" />
+        <input type="password" name="password" id=""/>
+        <label for="myRadioButton">
+            Gender
+            <input type="radio" name="gender" id="myRadioButton" value="male">
+            <input type="radio" name="gender" id="myRadioButton" value="female">
+            <input type="radio" name="gender" id="myRadioButton" value="others">
+        </label>
+        <label for="myCheckboxButton">
+            My checkbox
+        <input type="checkbox" name="myCheckbox" id="myCheckboxButton" value="checkbox"/>
+        </label>
+         <select name="mySelect">
+            <option value="myOption 1" data-myVal="{a:1,b:2}">Option 1</option>
+            <option value="myOption 2">Option 2</option>
+            <option value="myOption 3">Option 3</option>
+         </select>
+         <input type="file" name="myFile" multiple/>
+         <input type="reset" value="reset" name="reset">
+         <!-- <input type="text" name="userName" id="" value="something"/> -->
+         <p id="errorText"></p>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
