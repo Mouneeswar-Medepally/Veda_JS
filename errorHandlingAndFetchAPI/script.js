@@ -67,4 +67,4 @@ async function fetchData(url) {
     }
 }
 
-fetchData('https://jsonplaceholder.typicode.com/todos/1')
+fetchData('https://jsonplaceholder.typicode.com/todos')
