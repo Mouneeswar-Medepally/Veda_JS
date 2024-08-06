@@ -119,7 +119,8 @@ making it easier to understand and maintain.
 
 #### Async Functions
 
-An `async` function is a function that returns a Promise. The `async` keyword is placed before the function definition.
+An `async` function is a function that returns a Promise. 
+The `async` keyword is placed before the function definition.
 
 ```javascript
 async function fetchData() {
@@ -135,7 +136,8 @@ fetchData().then((data) => console.log(data)); // "some data"
 
 #### Await
 
-The `await` keyword can only be used inside `async` functions. It makes JavaScript wait until the Promise is settled (either fulfilled or rejected) and returns the result.
+The `await` keyword can only be used inside `async` functions. 
+It makes JavaScript wait until the Promise is settled (either fulfilled or rejected) and returns the result.
 
 #### Example:
 
