@@ -49,22 +49,28 @@
 //     });
 const ul=document.querySelector('ul')
 const p=document.querySelector('p')
-async function fetchData(url) {
+
+const displayList=(data)=>{
+    data.forEach(element => {
+        const li=document.createElement('li');
+        li.textContent=element.title
+        ul.appendChild(li)
+    });
+}
+async function fetchData(url,isList) {
     try{
         const response=await fetch(url);
         if(!response.ok){
             throw new Error("Network request failed!")
         }
         const data=await response.json()
-        data.forEach(element => {
-            const li=document.createElement('li');
-            li.textContent=element.title
-            ul.appendChild(li)
-        });
+        if(isList){
+            displayList(data)
+        }
     }catch(err){
         p.textContent=err.message
         // console.error('There was a problem with the fetch operation:', err);
     }
 }
 
-fetchData('https://jsonplaceholder.typicode.com/todos')
+fetchData('https://jsonplaceholder.typicode.com/todos',true)
