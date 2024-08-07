@@ -280,7 +280,8 @@ Status codes are three-digit numbers in the response that indicate the result of
 #### 2xx: Success
 - **200 OK**: The request was successful.
 - **201 Created**: The request was successful, and a resource was created.
-- **204 No Content**: The request was successful, but there is no content to send back.
+- **204 No Content**: The request was successful, 
+but there is no content to send back.
 
 #### 3xx: Redirection
 - **301 Moved Permanently**: The resource has been permanently moved to a new URL.
@@ -289,7 +290,8 @@ Status codes are three-digit numbers in the response that indicate the result of
 
 #### 4xx: Client Error
 - **400 Bad Request**: The server could not understand the request due to invalid syntax.
-- **401 Unauthorized**: The client must authenticate itself to get the requested response.
+- **401 Unauthorized**: The client must authenticate itself to get the requested 
+response.
 - **403 Forbidden**: The client does not have access rights to the content.
 - **404 Not Found**: The server cannot find the requested resource.
 - **405 Method Not Allowed**: The request method is known by the server but has been disabled and cannot be used.
@@ -302,4 +304,106 @@ Status codes are three-digit numbers in the response that indicate the result of
 
 ### Summary
 
-Understanding these key terminologies—request, headers, response, and HTTP status codes—is crucial for working with APIs. Requests and responses form the core of client-server communication, headers provide essential metadata, and status codes inform the client about the result of the request. By grasping these concepts, you can effectively interact with APIs and troubleshoot issues that may arise.
+Understanding these key terminologies—request, headers, response, and HTTP status codes—is crucial for working with APIs. Requests and responses form the core of client-server communication, headers provide essential metadata, and status codes inform the client about the result of the request.
+
+
+
+The `fetch` API in JavaScript is used to make network requests to servers. It provides an easy way to fetch resources asynchronously across the network. While `fetch` is most commonly used for `GET` requests, it also supports other HTTP methods such as `POST`, `PUT`, and `DELETE`.
+
+### 1. POST Method
+The `POST` method is used to send data to the server to create a new resource. This is often used when submitting form data or uploading a file.
+
+**Example:**
+```javascript
+fetch('https://example.com/api/resource', {
+  method: 'POST', // Specify the request method
+  headers: {
+    'Content-Type': 'application/json' // Specify the content type
+  },
+  body: JSON.stringify({
+    name: 'John Doe',
+    age: 30
+  }) // The payload is the data you want to send
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+```
+
+### 2. PUT Method
+The `PUT` method is used to update an existing resource on the server. This is used when you need to replace the current representation of the target resource with the uploaded content.
+
+**Example:**
+```javascript
+fetch('https://example.com/api/resource/1', {
+  method: 'PUT', // Specify the request method
+  headers: {
+    'Content-Type': 'application/json' // Specify the content type
+  },
+  body: JSON.stringify({
+    name: 'Jane Doe',
+    age: 25
+  }) // The payload is the data you want to send to update the resource
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+```
+
+### 3. DELETE Method
+The `DELETE` method is used to delete a specified resource on the server. This method does not require a body, as it is only intended to delete the resource.
+
+**Example:**
+```javascript
+fetch('https://example.com/api/resource/1', {
+  method: 'DELETE' // Specify the request method
+})
+  .then(response => {
+    if (response.ok) {
+      console.log('Resource deleted successfully');
+    } else {
+      console.error('Failed to delete the resource');
+    }
+  })
+  .catch(error => console.error('Error:', error));
+```
+
+### Common Headers and Error Handling
+
+When using `fetch` with `POST`, `PUT`, and `DELETE` methods, it's common to set headers and handle potential errors.
+
+**Headers:**
+- `Content-Type`: Specifies the media type of the resource. For JSON data, use `'application/json'`.
+
+**Error Handling:**
+- Use `.then()` to process the response.
+- Check if the response is successful with `response.ok`.
+- Use `.catch()` to handle any network errors.
+
+**Example with Error Handling:**
+```javascript
+fetch('https://example.com/api/resource', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    name: 'John Doe',
+    age: 30
+  })
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+    return response.json();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.error('There was a problem with your fetch operation:', error));
+```
+
+This covers the basic usage of `fetch` for `POST`, `PUT`, and `DELETE` methods.
+ Each method serves a specific purpose in CRUD (Create, Read, Update, Delete) operations, 
+ and `fetch` provides a straightforward way to interact with these HTTP methods.
+
+
