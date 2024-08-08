@@ -1,0 +1,542 @@
+Object-Oriented Programming (OOP) in JavaScript is a programming paradigm that uses objects and 
+classes to organize and structure code. 
+OOP concepts can be implemented in JavaScript through its prototypal inheritance and 
+class syntax introduced in ECMAScript 2015 (ES6). 
+
+### 1. **Classes and Objects**
+
+**Class:** A blueprint for creating objects. It defines properties and methods that the created objects will have.
+
+**Object:** An instance of a class. It contains data and behavior as defined by its class.
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+}
+
+const person1 = new Person('Alice', 30);
+person1.greet();  // Output: Hello, my name is Alice
+```
+
+### 2. **Encapsulation**
+
+Encapsulation is the concept of bundling data and methods 
+that operate on 
+that data within one unit (class), 
+and restricting direct access to some of the object's components. 
+This is done to protect the internal state of the object.
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this._name = name;
+    this._age = age;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  set name(newName) {
+    this._name = newName;
+  }
+
+  greet() {
+    console.log(`Hello, my name is ${this._name}`);
+  }
+}
+
+const person1 = new Person('Alice', 30);
+person1.name = 'Bob';  // Using the setter
+console.log(person1.name);  // Using the getter
+```
+
+### 3. **Inheritance**
+
+Inheritance is a mechanism for a new class to inherit properties 
+and methods from an existing class.
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    console.log(`${this.name} makes a noise`);
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
+  }
+
+  speak() {
+    console.log(`${this.name} barks`);
+  }
+}
+
+const dog = new Dog('Rex', 'German Shepherd');
+dog.speak();  // Output: Rex barks
+```
+
+### 4. **Polymorphism**
+
+Polymorphism allows objects of different classes to be treated as 
+objects of a common superclass. 
+It also allows methods to do different things based on the 
+object it is acting upon.
+
+```javascript
+class Bird {
+  speak() {
+    console.log('Bird chirps');
+  }
+}
+
+class Parrot extends Bird {
+  speak() {
+    console.log('Parrot talks');
+  }
+}
+
+const bird = new Bird();
+const parrot = new Parrot();
+
+bird.speak();  // Output: Bird chirps
+parrot.speak();  // Output: Parrot talks
+```
+
+### 5. **Abstraction**
+
+Abstraction involves hiding complex implementation details and 
+showing only the necessary features of an object.
+
+```javascript
+class Vehicle {
+  constructor(type, speed) {
+    this.type = type;
+    this.speed = speed;
+  }
+
+  move() {
+    console.log(`${this.type} moves at ${this.speed} mph`);
+  }
+}
+
+const car = new Vehicle('Car', 60);
+car.move();  // Output: Car moves at 60 mph
+```
+
+### Prototypal Inheritance
+
+Before ES6, JavaScript used prototypes to achieve inheritance. 
+Every object in JavaScript has a prototype, and an object can inherit properties and methods from another object via its prototype.
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.greet = function() {
+  console.log(`Hello, my name is ${this.name}`);
+};
+
+const person1 = new Person('Alice', 30);
+person1.greet();  // Output: Hello, my name is Alice
+```
+
+### Key Takeaways
+
+- **Classes** are templates for creating objects.
+- **Objects** are instances of classes.
+- **Encapsulation** hides the internal state and requires all interaction to be performed through an object's methods.
+- **Inheritance** allows a class to inherit properties and methods from another class.
+- **Polymorphism** allows for methods to behave differently based on the object they are acting upon.
+- **Abstraction** hides complex details and exposes only the necessary parts of an object.
+
+### 1. **Prototype**
+
+A prototype is an object from which other objects inherit properties. 
+Every JavaScript object has a prototype, and objects inherit properties and methods from their prototype.
+
+- **Prototype Chain:** The prototype chain is a mechanism by which objects inherit properties from other objects. When accessing a property on an object, the JavaScript engine first looks at the object itself. If the property is not found, it looks at the object's prototype, and so on, up the chain until the property is found or the end of the chain is reached.
+
+### 2. **Creating Prototypes**
+
+You can define methods and properties on an object's prototype to enable inheritance.
+
+#### Using Constructor Functions
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.greet = function() {
+  console.log(`Hello, my name is ${this.name}`);
+};
+
+const person1 = new Person('Alice', 30);
+person1.greet();  // Output: Hello, my name is Alice
+```
+
+#### Using ES6 Classes
+
+Although classes in ES6 provide a cleaner syntax, they are still based on prototypes.
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+}
+
+const person1 = new Person('Alice', 30);
+person1.greet();  // Output: Hello, my name is Alice
+```
+
+### 3. **Prototypal Inheritance**
+
+Prototypal inheritance is a style of inheritance where objects inherit directly from other objects. This is different from classical inheritance where instances inherit from classes.
+
+#### Inheriting from Another Prototype
+
+You can create a new object that inherits properties from another object using `Object.create()`.
+
+```javascript
+const personPrototype = {
+  greet: function() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+};
+
+const person1 = Object.create(personPrototype);
+person1.name = 'Alice';
+person1.greet();  // Output: Hello, my name is Alice
+```
+
+### 4. **Understanding the Prototype Chain**
+
+Every JavaScript object has a hidden property called `[[Prototype]]` (accessible via `__proto__` in most environments) that points to its prototype.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+const person1 = new Person('Alice');
+console.log(person1.__proto__ === Person.prototype);  // Output: true
+console.log(Person.prototype.constructor === Person);  // Output: true
+```
+
+### 5. **Constructor Property**
+
+Every function in JavaScript has a `prototype` property that is used to build the `[[Prototype]]` of objects created with that function. The `constructor` property of the prototype points back to the function.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+const person1 = new Person('Alice');
+console.log(person1.constructor === Person);  // Output: true
+```
+
+### 6. **Modifying Prototypes**
+
+You can add properties and methods to a prototype even after objects have been created.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.greet = function() {
+  console.log(`Hello, my name is ${this.name}`);
+};
+
+const person1 = new Person('Alice');
+person1.greet();  // Output: Hello, my name is Alice
+
+Person.prototype.sayGoodbye = function() {
+  console.log('Goodbye!');
+};
+
+person1.sayGoodbye();  // Output: Goodbye!
+```
+
+### 7. **Inheritance Using Prototypes**
+
+You can create a hierarchy of objects using prototypal inheritance.
+
+```javascript
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.speak = function() {
+  console.log(`${this.name} makes a noise`);
+};
+
+function Dog(name, breed) {
+  Animal.call(this, name);  // Call the parent constructor
+  this.breed = breed;
+}
+
+// Inherit from Animal
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+
+Dog.prototype.speak = function() {
+  console.log(`${this.name} barks`);
+};
+
+const dog = new Dog('Rex', 'German Shepherd');
+dog.speak();  // Output: Rex barks
+```
+
+### 8. **Benefits of Prototypal Inheritance**
+
+- **Efficiency:** Methods are defined once on the prototype and shared across all instances, saving memory.
+- **Flexibility:** Objects can inherit directly from other objects, making it easy to create new objects with shared behavior.
+- **Dynamic:** Prototypes can be modified at runtime, allowing for dynamic changes to the behavior of all instances.
+
+### Summary
+
+- **Prototype:** An object from which other objects inherit properties.
+- **Prototype Chain:** A chain of objects linked through the `[[Prototype]]` property.
+- **Prototypal Inheritance:** A mechanism by which objects inherit properties directly from other objects.
+- **Constructor Functions and Classes:** Ways to define objects and their prototypes.
+- **Modifying Prototypes:** You can add methods and properties to prototypes even after objects have been created.
+
+Understanding prototypes and prototypal inheritance is crucial for mastering JavaScript and leveraging its full potential for object-oriented programming.
+
+### Classes in JavaScript
+
+JavaScript classes, introduced in ECMAScript 2015 (ES6), provide a more intuitive syntax for creating objects and handling inheritance. While they offer a cleaner and more familiar structure for developers coming from other OOP languages like Java or C++, classes in JavaScript are essentially syntactic sugar over the existing prototypal inheritance model.
+
+### Class Declarations
+
+A class declaration defines a new class with a given name using the `class` keyword. Here's the basic syntax:
+
+```javascript
+class Person {
+  // Constructor method
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  // Method declaration
+  greet() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+}
+
+// Creating an instance of the class
+const person1 = new Person('Alice', 30);
+person1.greet();  // Output: Hello, my name is Alice
+```
+
+### Constructors
+
+The constructor method is a special method for creating and initializing an object created with a class. There can only be one special method with the name "constructor" in a class. If a class has a constructor, it will be automatically called when an instance of the class is created.
+
+#### Example:
+
+```javascript
+class Car {
+  constructor(make, model) {
+    this.make = make;
+    this.model = model;
+  }
+
+  displayInfo() {
+    console.log(`Car: ${this.make} ${this.model}`);
+  }
+}
+
+const myCar = new Car('Toyota', 'Corolla');
+myCar.displayInfo();  // Output: Car: Toyota Corolla
+```
+
+### The `this` Keyword
+
+The `this` keyword in JavaScript refers to the object from 
+which it was called. 
+In the context of a class, `this` typically refers to the 
+instance of the class.
+
+#### Example:
+
+```javascript
+class Animal {
+  constructor(type, sound) {
+    this.type = type;
+    this.sound = sound;
+  }
+
+  makeSound() {
+    console.log(`${this.type} makes a ${this.sound} sound`);
+  }
+}
+
+const dog = new Animal('Dog', 'bark');
+dog.makeSound();  // Output: Dog makes a bark sound
+```
+
+### Method Definitions
+
+Methods can be defined within a class to add behavior to class instances. These methods are added to the prototype of the class.
+
+#### Example:
+
+```javascript
+class Rectangle {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+
+  // Method to calculate area
+  calculateArea() {
+    return this.width * this.height;
+  }
+
+  // Method to calculate perimeter
+  calculatePerimeter() {
+    return 2 * (this.width + this.height);
+  }
+}
+
+const myRectangle = new Rectangle(10, 5);
+console.log(myRectangle.calculateArea());  // Output: 50
+console.log(myRectangle.calculatePerimeter());  // Output: 30
+```
+
+### Static Methods
+
+Static methods are defined on the class itself rather than on instances of the class. They are often used for utility functions.
+
+#### Example:
+
+```javascript
+class MathUtil {
+  static add(a, b) {
+    return a + b;
+  }
+}
+
+console.log(MathUtil.add(5, 3));  // Output: 8
+```
+
+### Inheritance
+
+Classes can extend other classes using the `extends` keyword. This allows a class to inherit properties and methods from another class.
+
+#### Example:
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    console.log(`${this.name} makes a noise`);
+  }
+}
+
+class Dog extends Animal {
+  speak() {
+    console.log(`${this.name} barks`);
+  }
+}
+
+const myDog = new Dog('Rex');
+myDog.speak();  // Output: Rex barks
+```
+
+### The `super` Keyword
+
+The `super` keyword is used to call the constructor of the parent class and to access its methods.
+
+#### Example:
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    console.log(`${this.name} makes a noise`);
+  }
+}
+
+class Cat extends Animal {
+  constructor(name, color) {
+    super(name);  // Call the parent class constructor
+    this.color = color;
+  }
+
+  speak() {
+    super.speak();  // Call the parent class method
+    console.log(`${this.name} meows`);
+  }
+}
+
+const myCat = new Cat('Whiskers', 'gray');
+myCat.speak();
+// Output:
+// Whiskers makes a noise
+// Whiskers meows
+```
+
+### Private Fields and Methods (Experimental)
+
+JavaScript also supports private fields and methods using a hash `#` prefix. These are still experimental features and may not be fully supported in all environments.
+
+#### Example:
+
+```javascript
+class Person {
+  #privateField = 'Private Value';
+
+  getPrivateField() {
+    return this.#privateField;
+  }
+}
+
+const person = new Person();
+console.log(person.getPrivateField());  // Output: Private Value
+// console.log(person.#privateField);  // SyntaxError: Private field '#privateField' must be declared in an enclosing class
+```
+
+### Summary
+
+- **Class Declarations:** Define new classes using the `class` keyword.
+- **Constructors:** Special methods called when creating an instance of a class.
+- **The `this` Keyword:** Refers to the instance of the class.
+- **Method Definitions:** Add behavior to class instances.
+- **Static Methods:** Methods defined on the class itself.
+- **Inheritance:** Use the `extends` keyword to create subclasses.
+- **The `super` Keyword:** Call the constructor and methods of the parent class.
+- **Private Fields and Methods:** Define private fields and methods using `#` (experimental feature).
