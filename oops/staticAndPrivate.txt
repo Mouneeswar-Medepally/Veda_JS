@@ -1,0 +1,362 @@
+### Static Methods in JavaScript
+
+**Static methods** are methods that belong to a class rather than to instances of 
+the class. 
+They are called on the class itself, not on the objects that are instances of the class. Static methods are often used for utility functions or to create instance-independent logic.
+
+#### Characteristics of Static Methods:
+1. **Class-Level Scope**: Static methods are tied to the class itself,
+ not to any object created from the class.
+2. **Cannot Access Instance Properties/Methods**: Static methods do not have access 
+to the instance variables (`this`) of the class. 
+They can only work with static properties and methods.
+3. **Utility Functions**: Static methods are commonly used for utility functions, 
+like formatting strings, creating specific instances, or other operations that do not require instance-level data.
+
+#### Example:
+```javascript
+class MathUtil {
+  // A static method to calculate the square of a number
+  static square(number) {
+    return number * number;
+  }
+}
+
+// Calling the static method
+console.log(MathUtil.square(4)); // Output: 16
+
+// Trying to call a static method on an instance will result in an error
+const util = new MathUtil();
+console.log(util.square(4)); // Error: util.square is not a function
+```
+
+### Private Variables and Methods in JavaScript
+
+In JavaScript, **private variables and methods** are used to encapsulate the internal workings of a class or module, making them inaccessible from outside the class or module. This helps enforce the principle of information hiding, a key aspect of object-oriented programming.
+
+#### Private Variables and Methods Before ES6:
+Before the introduction of the ES6 class syntax, private variables and methods were often implemented using closures and immediately-invoked function expressions (IIFEs). 
+
+#### Example:
+```javascript
+function Counter() {
+  let count = 0; // Private variable
+
+  this.increment = function () {
+    count += 1;
+    console.log(count);
+  };
+
+  this.decrement = function () {
+    count -= 1;
+    console.log(count);
+  };
+}
+
+const counter = new Counter();
+counter.increment(); // Output: 1
+counter.decrement(); // Output: 0
+
+// Direct access to the private variable is not possible
+console.log(counter.count); // Output: undefined
+```
+
+#### Private Variables and Methods with ES6 (Using WeakMap or Symbols):
+With ES6, you can also use `WeakMap` or `Symbol` to simulate private members.
+
+#### Example with `WeakMap`:
+```javascript
+const _counter = new WeakMap();
+
+class Counter {
+  constructor() {
+    _counter.set(this, 0); // Private variable
+  }
+
+  increment() {
+    let count = _counter.get(this) + 1;
+    _counter.set(this, count);
+    console.log(count);
+  }
+}
+
+const counter = new Counter();
+counter.increment(); // Output: 1
+console.log(counter._counter); // Output: undefined
+```
+
+#### Private Variables and Methods in ES2020 (Using `#` Syntax):
+The ES2020 (ES11) introduced a native way to create private fields and methods using the `#` symbol.
+
+#### Example:
+```javascript
+class Counter {
+  #count = 0; // Private variable
+
+  #log() { // Private method
+    console.log('Count:', this.#count);
+  }
+
+  increment() {
+    this.#count += 1;
+    this.#log();
+  }
+
+  decrement() {
+    this.#count -= 1;
+    this.#log();
+  }
+}
+
+const counter = new Counter();
+counter.increment(); // Output: Count: 1
+counter.decrement(); // Output: Count: 0
+
+// Accessing private fields or methods from outside the class results in an error
+console.log(counter.#count); // Error: Private field '#count' must be declared in an enclosing class
+```
+
+#### Key Points about Private Variables and Methods:
+1. **Encapsulation**: They promote encapsulation by keeping the internal state and behavior hidden from the outside world.
+2. **Cannot Be Accessed Outside**: Private variables and methods cannot be accessed or modified directly from outside the class.
+3. **Maintainability**: They help in maintaining the integrity of the data and prevent unintended interactions with the internal state of an object.
+
+In summary, static methods are bound to the class itself and are useful for utility-like operations, while private variables and methods allow for encapsulation and protection of the internal state in JavaScript classes.
+
+
+
+The `call`, `apply`, and `bind` methods in JavaScript are powerful tools that 
+allow you to control the `this` context of a function. 
+These methods can be used to invoke functions with a specific `this` context 
+and to pass arguments in different ways. Understanding the differences 
+and use cases for each is essential for advanced JavaScript programming.
+
+### 1. `call` Method
+
+The `call` method allows you to invoke a function with a specific `this` context and pass arguments one by one.
+
+#### Syntax:
+```javascript
+functionName.call(thisArg, arg1, arg2, ...)
+```
+
+- `thisArg`: The value you want `this` to refer to inside the function.
+- `arg1, arg2, ...`: Arguments you want to pass to the function.
+
+#### Example:
+```javascript
+function greet(greeting, punctuation) {
+  console.log(greeting + ', ' + this.name + punctuation);
+}
+
+const person = { name: 'Alice' };
+
+greet.call(person, 'Hello', '!'); // Output: "Hello, Alice!"
+```
+
+#### Explanation:
+- In this example, `greet` is a function that uses `this.name`. By default, `this` would be undefined or refer to the global object, depending on the mode.
+- By using `call`, you explicitly set `this` to refer to the `person` object, so `this.name` becomes `"Alice"`.
+- The `call` method allows you to pass arguments (`'Hello'` and `'!'`) individually.
+
+### 2. `apply` Method
+
+The `apply` method is similar to `call`, but it takes arguments as an array rather than individually.
+
+#### Syntax:
+```javascript
+functionName.apply(thisArg, [argsArray])
+```
+
+- `thisArg`: The value you want `this` to refer to inside the function.
+- `argsArray`: An array of arguments you want to pass to the function.
+
+#### Example:
+```javascript
+function greet(greeting, punctuation) {
+  console.log(greeting + ', ' + this.name + punctuation);
+}
+
+const person = { name: 'Bob' };
+
+greet.apply(person, ['Hi', '?']); // Output: "Hi, Bob?"
+```
+
+#### Explanation:
+- The `apply` method sets the `this` context to the `person` object, just like `call`.
+- However, it passes the arguments as an array `['Hi', '?']`.
+- This is particularly useful when you have an array of arguments ready and don’t want to manually spread them out.
+
+### 3. `bind` Method
+
+The `bind` method creates a new function that, when called, 
+has its `this` context permanently bound to the value provided,
+ along with any preset arguments.
+
+#### Syntax:
+```javascript
+const boundFunction = functionName.bind(thisArg, arg1, arg2, ...)
+```
+
+- `thisArg`: The value you want `this` to refer to inside the function.
+- `arg1, arg2, ...`: (Optional) Arguments you want to pre-set in the new function.
+
+#### Example:
+```javascript
+function greet(greeting, punctuation) {
+  console.log(greeting + ', ' + this.name + punctuation);
+}
+
+const person = { name: 'Charlie' };
+
+const greetPerson = greet.bind(person, 'Hey');
+
+greetPerson('!!'); // Output: "Hey, Charlie!!"
+```
+
+#### Explanation:
+- The `bind` method does not immediately invoke the function. Instead, it returns a new function with `this` permanently bound to `person`.
+- In the example, `greet.bind(person, 'Hey')` creates a new function where `this` is always `person` and the first argument is always `'Hey'`.
+- You can then call `greetPerson` later and provide the remaining arguments, like `'!!'`.
+
+### Use Cases and Differences
+
+#### Use Cases for `call`:
+- When you want to invoke a function with a specific `this` context and pass arguments individually.
+- Useful in methods like `Array.prototype.slice.call(arguments)` to convert the `arguments` object into an array.
+
+#### Use Cases for `apply`:
+- When you have an array of arguments and want to invoke a function with a specific `this` context.
+- Often used in functions like `Math.max.apply(null, [1, 2, 3])` to find the maximum value in an array.
+
+#### Use Cases for `bind`:
+- When you want to create a new function with a permanently bound `this` context, possibly with pre-set arguments.
+- Commonly used in event handlers to ensure `this` refers to the correct object when the handler is invoked later.
+
+### Example Combining All Three Methods
+
+Let's look at a more comprehensive example where all three methods are used.
+
+```javascript
+const person1 = { name: 'Dave' };
+const person2 = { name: 'Eve' };
+
+function introduce(greeting, punctuation) {
+  console.log(greeting + ', ' + this.name + punctuation);
+}
+
+// Using call
+introduce.call(person1, 'Hello', '!'); // Output: "Hello, Dave!"
+
+// Using apply
+introduce.apply(person2, ['Hi', '.']); // Output: "Hi, Eve."
+
+// Using bind
+const introduceDave = introduce.bind(person1, 'Hey');
+introduceDave('!!'); // Output: "Hey, Dave!!"
+```
+
+### Summary of Differences
+
+- **`call`**: Invokes the function immediately, with `this` set to `thisArg`, and arguments passed individually.
+- **`apply`**: Invokes the function immediately, with `this` set to `thisArg`, but arguments are passed as an array.
+- **`bind`**: Does not invoke the function immediately. Instead, it returns a new function with `this` permanently bound to `thisArg`, along with any preset arguments.
+
+Understanding these methods gives you fine-grained control over the `this` context in your functions, which is crucial in many JavaScript programming scenarios, such as event handling, callback functions, and more.
+
+
+**Setters and Getters** in JavaScript are special methods used to access 
+and manipulate the properties of objects in a controlled manner. 
+They can be defined in both class-based and function constructor-based objects.
+ Let's explore these in detail.
+
+### 1. Setters and Getters in Class-Based Objects
+
+In modern JavaScript, classes provide a clean and easy way to define setter and getter methods.
+
+#### Class Syntax
+
+Setters and getters are defined using the `set` and `get` keywords in a class. 
+They allow you to create properties that appear as normal properties but internally run specific logic whenever they are read or written to.
+
+#### Example:
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this._name = name;
+    this._age = age; // The underscore indicates a "private" field (by convention)
+  }
+
+  // Getter for name
+  get name() {
+    return this._name;
+  }
+
+  // Setter for name
+  set name(newName) {
+    if (typeof newName === 'string') {
+      this._name = newName;
+    } else {
+      console.log('Name must be a string');
+    }
+  }
+
+  // Getter for age
+  get age() {
+    return this._age;
+  }
+
+  // Setter for age
+  set age(newAge) {
+    if (newAge > 0 && Number.isInteger(newAge)) {
+      this._age = newAge;
+    } else {
+      console.log('Age must be a positive integer');
+    }
+  }
+}
+
+const person = new Person('Alice', 25);
+
+console.log(person.name); // Getter is called, Output: "Alice"
+person.name = 'Bob';      // Setter is called, changes _name to "Bob"
+console.log(person.name); // Getter is called, Output: "Bob"
+
+person.age = 30;          // Setter is called, changes _age to 30
+console.log(person.age);  // Getter is called, Output: 30
+
+person.age = -5;          // Setter is called, but validation fails, Output: "Age must be a positive integer"
+```
+
+#### Explanation:
+
+- **Private Fields**: `_name` and `_age` are not technically private, but by convention, the underscore prefix indicates that they are intended for internal use.
+  
+- **Getter (`get`)**: The `get name()` method allows you to access `name` as if it were a property, but it runs the logic inside the getter function.
+
+- **Setter (`set`)**: The `set name(newName)` method allows you to assign a value to `name`, and you can include validation logic or other processing within the setter.
+
+- **Encapsulation**: Setters and getters encapsulate the internal data, providing control over how properties are accessed and modified. This is a crucial aspect of object-oriented programming.
+
+#### Explanation:
+
+- **Direct Definition**: In object literals, you can directly define getter and setter methods by using the `get` and `set` keywords.
+
+- **Simplicity**: This method is straightforward and useful for defining small, self-contained objects.
+
+### Why Use Setters and Getters?
+
+- **Encapsulation**: They encapsulate internal data, allowing you to control how properties are accessed and modified.
+
+- **Validation**: Setters can include validation logic, ensuring that properties are set to valid values.
+
+- **Computed Properties**: Getters can compute values dynamically based on other properties, enabling more complex logic within a seemingly simple property.
+
+### Summary
+
+- **Classes**: Use `get` and `set` keywords within a class to create setters and getters.
+- **Function Constructors**: Use `Object.defineProperty` to define setters and getters.
+- **Object Literals**: Define getters and setters directly within the object using `get` and `set`.
+
+Each of these approaches allows you to create properties that have logic associated with reading or writing their values, providing greater control and flexibility in your code.
