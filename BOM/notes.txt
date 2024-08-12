@@ -1,0 +1,703 @@
+The **Browser Object Model (BOM)**
+refers to the browser's hierarchy of objects that allow you 
+to interact with the browser itself, outside the content of the web page.
+The BOM provides methods and properties for interacting with the browser window 
+and control over the user’s browsing environment. 
+While the BOM is not formally standardized, it is supported by all major browsers.
+
+### Key Components of the BOM:
+
+1. **`window` Object:**
+   - The `window` object is the top-level object in the BOM hierarchy. It represents the browser window or tab that contains a webpage.
+   - All global JavaScript objects, functions, and variables automatically become members of the `window` object.
+   - Example:
+     ```javascript
+     console.log(window.innerWidth); // Returns the width of the window's content area
+     console.log(window.location.href); // Returns the URL of the current page
+     ```
+
+2. **`document` Object:**
+   - The `document` object is a part of the BOM and provides access to the contents of the webpage (the DOM). While the DOM focuses on the content, the document object serves as a bridge between the content and the BOM.
+   - Example:
+     ```javascript
+     console.log(document.title); // Returns the title of the document
+     ```
+
+3. **`location` Object:**
+   - The `location` object contains information about the current URL and allows you to redirect the browser to a new URL.
+   - Properties include `href` (full URL), `protocol` (http/https), `host`, `hostname`, `pathname`, `search`, `hash`, etc.
+   - Example:
+     ```javascript
+     console.log(window.location.href); // Returns the entire URL
+     window.location.href = "https://example.com"; // Redirects the browser to a new page
+     ```
+
+4. **`navigator` Object:**
+   - The `navigator` object contains information about the browser, such as the user agent string, platform, language, and online status.
+   - This object is often used to detect the type of browser being used.
+   - Example:
+     ```javascript
+     console.log(navigator.userAgent); // Returns the user-agent string
+     console.log(navigator.language); // Returns the preferred language of the browser
+     ```
+
+5. **`screen` Object:**
+   - The `screen` object contains information about the user's screen, including dimensions and color depth.
+   - Example:
+     ```javascript
+     console.log(screen.width); // Returns the width of the screen in pixels
+     console.log(screen.height); // Returns the height of the screen in pixels
+     ```
+
+6. **`history` Object:**
+   - The `history` object provides access to the browser’s session history, allowing you to navigate back and forward through the user's history.
+   - Methods include `back()`, `forward()`, and `go()`.
+   - Example:
+     ```javascript
+     window.history.back(); // Navigates back one page in the history
+     window.history.go(-2); // Navigates back two pages
+     ```
+
+7. **`alert`, `confirm`, and `prompt` Methods:**
+   - These methods are part of the BOM and allow you to interact with users through modal dialog boxes.
+   - Example:
+     ```javascript
+     alert("Hello, World!"); // Displays an alert box with a message
+     const userConfirmed = confirm("Are you sure?"); // Displays a confirmation box
+     const userInput = prompt("Please enter your name:"); // Displays a prompt box
+     ```
+
+### Use Cases:
+- **Manipulating Browser Windows**: You can open, close, resize, or move browser windows using the BOM (e.g., `window.open()`, `window.close()`).
+- **Navigating Web Pages**: Use the `location` object to control page navigation.
+- **Detecting Browser and Environment**: The `navigator` object helps in detecting browser features and user environment details.
+- **Accessing Browser History**: The `history` object allows for navigating through the user's session history.
+
+### BOM vs. DOM:
+- **BOM** is concerned with the browser environment, providing methods to interact with the browser window, control navigation, and access browser information.
+- **DOM (Document Object Model)** is focused on the content of the web page, representing the structure of the document and enabling interaction with HTML and CSS elements.
+
+
+`window.location` is a powerful and versatile property in JavaScript that provides access to the location (URL) of the current document (web page). It is part of the `window` object, which represents the browser's window. The `window.location` object can be used to get the current page's URL, redirect the browser to a new URL, reload the page, and more.
+
+### Structure of `window.location`
+
+The `window.location` object has several properties and methods, which can be used to manipulate the URL or navigate the browser. Here's a breakdown:
+
+### Properties of `window.location`
+
+1. **`href`**: The full URL of the current page (including protocol, hostname, path, query parameters, and fragment).
+
+   ```javascript
+   console.log(window.location.href);
+   // Output: "https://www.example.com/path/page.html?query=123#section1"
+   ```
+
+2. **`protocol`**: The protocol of the current URL (e.g., `http:`, `https:`).
+
+   ```javascript
+   console.log(window.location.protocol);
+   // Output: "https:"
+   ```
+
+3. **`host`**: The hostname and port number (if specified) of the current URL.
+
+   ```javascript
+   console.log(window.location.host);
+   // Output: "www.example.com"
+   ```
+
+4. **`hostname`**: The domain name of the current URL (without the port number).
+
+   ```javascript
+   console.log(window.location.hostname);
+   // Output: "www.example.com"
+   ```
+
+5. **`port`**: The port number of the current URL (if specified).
+
+   ```javascript
+   console.log(window.location.port);
+   // Output: "" (empty string if no port is specified)
+   ```
+
+6. **`pathname`**: The path of the current URL, which includes everything after the domain up to the query string or fragment.
+
+   ```javascript
+   console.log(window.location.pathname);
+   // Output: "/path/page.html"
+   ```
+
+7. **`search`**: The query string of the current URL, including the leading `?`.
+
+   ```javascript
+   console.log(window.location.search);
+   // Output: "?query=123"
+   ```
+
+8. **`hash`**: The fragment identifier of the current URL, including the leading `#`.
+
+   ```javascript
+   console.log(window.location.hash);
+   // Output: "#section1"
+   ```
+
+9. **`origin`**: The origin of the current URL, which is a combination of the protocol, hostname, and port.
+
+   ```javascript
+   console.log(window.location.origin);
+   // Output: "https://www.example.com"
+   ```
+
+### Methods of `window.location`
+
+1. **`assign(url)`**: Loads a new document at the specified URL. 
+This is a way to programmatically navigate to another page.
+
+   ```javascript
+   window.location.assign("https://www.example.com");
+   ```
+
+2. **`replace(url)`**: Replaces the current document with a new one at the specified URL. 
+Unlike `assign`, `replace` does not create a new entry in the browser's history, 
+so the user cannot use the back button to navigate to the previous page.
+
+   ```javascript
+   window.location.replace("https://www.example.com");
+   ```
+
+3. **`reload()`**: Reloads the current document. If you pass `true` as an argument, 
+it forces the page to reload from the server instead of the browser cache.
+
+   ```javascript
+   window.location.reload(); // Reloads from cache
+   window.location.reload(true); // Reloads from server
+   ```
+
+4. **`toString()`**: Returns the full URL of the current page as a string. This method is usually called implicitly when you use `window.location` in a string context.
+
+   ```javascript
+   console.log(window.location.toString());
+   // Output: "https://www.example.com/path/page.html?query=123#section1"
+   ```
+
+### Examples of Using `window.location`
+
+#### 1. Redirecting to Another Page
+
+```javascript
+function redirectToHome() {
+  window.location.href = "https://www.example.com/home";
+}
+
+// Call the function to redirect
+redirectToHome();
+```
+
+This example redirects the user to the homepage of the website.
+
+#### 2. Extracting Query Parameters
+
+```javascript
+function getQueryParams() {
+  const params = new URLSearchParams(window.location.search);
+  console.log(params.get("query"));
+}
+
+// If the URL is "https://www.example.com/page.html?query=123"
+getQueryParams();
+// Output: "123"
+```
+
+This example extracts the value of the `query` parameter from the URL.
+
+#### 3. Reloading the Page
+
+```javascript
+function refreshPage() {
+  window.location.reload();
+}
+
+// Call the function to reload the page
+refreshPage();
+```
+
+This example reloads the current page.
+
+#### 4. Navigating to a New Page Without Creating a History Entry
+
+```javascript
+function replaceWithNewPage() {
+  window.location.replace("https://www.example.com/new-page");
+}
+
+// Call the function to navigate without creating a history entry
+replaceWithNewPage();
+```
+
+This example navigates to a new page without adding an entry to the browser's history.
+
+
+
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+
+The `navigator` object in JavaScript is a part of the Browser Object Model (BOM) and provides details about the browser, the user’s device, and the operating environment. It serves as an interface between the web page and the web browser, allowing you to access information about the browser and control certain aspects of it.
+
+### Structure of the `navigator` Object
+
+The `navigator` object contains several properties and methods that offer information about the browser and the device. Below is an in-depth look at the key properties and methods:
+
+### Properties of the `navigator` Object
+
+1. **`navigator.appName`**: This property returns the name of the browser. However, due to compatibility reasons, most browsers return `"Netscape"`, regardless of the actual browser.
+
+   ```javascript
+   console.log(navigator.appName);
+   // Output: "Netscape"
+   ```
+
+2. **`navigator.appVersion`**: Returns the version information of the browser as a string. It includes the browser name, version, and other details. Like `appName`, it's not very reliable for modern browsers.
+
+   ```javascript
+   console.log(navigator.appVersion);
+   // Output: "5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+   ```
+
+3. **`navigator.userAgent`**: Returns the user agent string for the browser, which contains information about the browser name, version, and the operating system. This is commonly used for browser detection.
+
+   ```javascript
+   console.log(navigator.userAgent);
+   // Output: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+   ```
+
+4. **`navigator.platform`**: Provides the platform or operating system on which the browser is running.
+
+   ```javascript
+   console.log(navigator.platform);
+   // Output: "Win32" or "MacIntel" depending on the OS
+   ```
+
+5. **`navigator.language`**: Returns the preferred language of the user as a string (e.g., `"en-US"`). This can be used to tailor content based on the user's language.
+
+   ```javascript
+   console.log(navigator.language);
+   // Output: "en-US"
+   ```
+
+6. **`navigator.languages`**: Returns an array of languages known to the browser, with the preferred language as the first element.
+
+   ```javascript
+   console.log(navigator.languages);
+   // Output: ["en-US", "en"]
+   ```
+
+7. **`navigator.cookieEnabled`**: Indicates whether cookies are enabled in the browser. Returns `true` if cookies are enabled, and `false` otherwise.
+
+   ```javascript
+   console.log(navigator.cookieEnabled);
+   // Output: true
+   ```
+
+8. **`navigator.onLine`**: Indicates whether the browser is currently online. Returns `true` if the browser is online, and `false` if it is offline.
+
+   ```javascript
+   console.log(navigator.onLine);
+   // Output: true
+   ```
+
+9. **`navigator.geolocation`**: Provides access to the device’s geographic location, allowing you to get the user's current position if they grant permission.
+
+   ```javascript
+   navigator.geolocation.getCurrentPosition(
+     (position) => {
+       console.log(`Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`);
+     },
+     (error) => {
+       console.error(error.message);
+     }
+   );
+   ```
+
+10. **`navigator.hardwareConcurrency`**: Returns the number of logical processors available on the user's device, which can be useful for optimizing the performance of web applications.
+
+    ```javascript
+    console.log(navigator.hardwareConcurrency);
+    // Output: 8 (for an 8-core processor)
+    ```
+
+11. **`navigator.deviceMemory`**: Returns the amount of device memory in gigabytes, allowing developers to tailor applications based on the device's capabilities.
+
+    ```javascript
+    console.log(navigator.deviceMemory);
+    // Output: 8 (for 8 GB of RAM)
+    ```
+
+12. **`navigator.connection`**: Returns a `NetworkInformation` object containing information about the network connection, such as the effective bandwidth and the type of connection.
+
+    ```javascript
+    console.log(navigator.connection.effectiveType);
+    // Output: "4g" (depending on the network type)
+    ```
+
+13. **`navigator.credentials`**: Provides access to the Credentials Management API, allowing web applications to handle user credentials more securely.
+
+    ```javascript
+    navigator.credentials.get({password: true, federated: true}).then((credential) => {
+      console.log(credential);
+    });
+    ```
+
+14. **`navigator.permissions`**: Returns a `Permissions` object that can be used to query the status of various permissions (like geolocation, notifications, etc.).
+
+    ```javascript
+    navigator.permissions.query({name: 'geolocation'}).then((result) => {
+      console.log(result.state); // "granted", "denied", or "prompt"
+    });
+    ```
+
+15. **`navigator.serviceWorker`**: Provides access to the Service Worker API, which allows you to register and control service workers for background tasks, caching, and push notifications.
+
+    ```javascript
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then((registration) => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      });
+    }
+    ```
+
+### Methods of the `navigator` Object
+
+1. **`navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options)`**: Retrieves the current geographic location of the device. The success callback is called with a `Position` object, and the error callback is called if the location cannot be determined.
+
+   ```javascript
+   navigator.geolocation.getCurrentPosition(
+     (position) => {
+       console.log(position.coords.latitude, position.coords.longitude);
+     },
+     (error) => {
+       console.error('Error getting location:', error);
+     }
+   );
+   ```
+
+2. **`navigator.geolocation.watchPosition(successCallback, errorCallback, options)`**: Continuously watches the device's position and calls the success callback whenever the position changes.
+
+   ```javascript
+   const watchId = navigator.geolocation.watchPosition(
+     (position) => {
+       console.log(position.coords.latitude, position.coords.longitude);
+     },
+     (error) => {
+       console.error('Error watching location:', error);
+     }
+   );
+   
+   // To stop watching
+   navigator.geolocation.clearWatch(watchId);
+   ```
+
+3. **`navigator.vibrate(pattern)`**: Causes the device to vibrate for the specified pattern. The pattern can be a single number (for a single vibration) or an array (for multiple vibrations).
+
+   ```javascript
+   navigator.vibrate(1000); // Vibrate for 1 second
+
+   // Vibrate for 1 second, pause for 0.5 seconds, then vibrate for 2 seconds
+   navigator.vibrate([1000, 500, 2000]);
+   ```
+
+4. **`navigator.sendBeacon(url, data)`**: Sends a small amount of data to the server asynchronously, often used for sending analytics or logging data.
+
+   ```javascript
+   const data = new FormData();
+   data.append('name', 'value');
+   navigator.sendBeacon('/log', data);
+   ```
+
+5. **`navigator.clipboard.writeText(text)`**: Writes the specified text to the system clipboard.
+
+   ```javascript
+   navigator.clipboard.writeText('Copied text').then(() => {
+     console.log('Text copied to clipboard');
+   });
+   ```
+
+6. **`navigator.clipboard.readText()`**: Reads the text from the system clipboard.
+
+   ```javascript
+   navigator.clipboard.readText().then((text) => {
+     console.log('Clipboard text:', text);
+   });
+   ```
+
+### Browser Compatibility and Security
+
+- **Compatibility**: The `navigator` object and many of its properties are widely supported across all modern browsers. However, some features like `navigator.credentials`, `navigator.permissions`, and `navigator.deviceMemory` might have limited support or require secure contexts (HTTPS).
+
+- **Security**: Access to sensitive information (like geolocation or clipboard) often requires user permission. Additionally, methods like `sendBeacon`, `serviceWorker`, and clipboard operations are restricted to secure contexts (HTTPS) due to potential security risks.
+
+### Use Cases of the `navigator` Object
+
+- **Device and Browser Detection**: You can use properties like `userAgent`, `platform`, and `language` to detect the user’s device and browser environment, allowing you to tailor your application’s behavior.
+
+- **Geolocation Services**: Using `geolocation`, you can create location-based applications, such as maps, weather apps, or location tracking services.
+
+- **Network Management**: The `connection` property can help optimize the user experience based on network conditions, such as adjusting image quality or prefetching resources.
+
+- **Offline Applications**: By combining `serviceWorker` with `onLine`, you can create offline-first applications that cache resources and sync data when the device is back online.
+ 
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+Browser storage mechanisms allow web applications to store data on the client-side, enabling persistent and session-based storage that can be accessed across different pages or sessions.
+There are several types of storage available in modern browsers, each with its own use cases, advantages, and limitations. 
+The main types of browser storage include:
+
+1. **Cookies**
+2. **Local Storage**
+3. **Session Storage**
+
+### 1. Cookies
+
+#### Overview
+Cookies are small pieces of data that are sent from a web server to a 
+user's browser and stored on the user's device. 
+They are included in every HTTP request sent to the server, 
+making them useful for maintaining session state, tracking user activities, 
+and storing user preferences.
+
+#### Characteristics
+- **Size Limit**: Typically limited to around 4 KB per cookie.
+- **Expiration**: Cookies can be set with an expiration date, after which they are automatically deleted. If no expiration is set, the cookie will be deleted when the browser is closed (session cookie).
+- **Scope**: Cookies can be restricted to a specific domain and path, allowing them to be shared across pages or limited to a single page.
+- **Security**: Cookies can be flagged as `HttpOnly` (inaccessible via JavaScript) and `Secure` (sent only over HTTPS).
+
+#### Example
+```javascript
+// Setting a cookie
+document.cookie = "username=JohnDoe; expires=Fri, 31 Dec 2024 12:00:00 UTC; path=/";
+
+// Reading cookies
+console.log(document.cookie); // Output: "username=JohnDoe"
+
+// Deleting a cookie
+document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+```
+
+### 2. Local Storage
+
+#### Overview
+Local Storage is part of the Web Storage API and allows for the storage 
+of key-value pairs in a web browser with no expiration time. 
+Data stored in Local Storage persists even after the 
+browser is closed and reopened, making it useful for storing user settings, 
+preferences, or other data that should persist across sessions.
+
+#### Characteristics
+- **Size Limit**: Typically around 5-10 MB per origin (domain).
+- **Persistence**: Data does not expire unless explicitly deleted by the user or the web application.
+- **Accessibility**: Data is accessible only within the same origin (protocol, domain, and port).
+
+#### Example
+```javascript
+// Storing data
+localStorage.setItem('username', 'JohnDoe');
+
+// Retrieving data
+const username = localStorage.getItem('username');
+console.log(username); // Output: "JohnDoe"
+
+// Deleting data
+localStorage.removeItem('username');
+
+// Clearing all data
+localStorage.clear();
+```
+
+### 3. Session Storage
+
+#### Overview
+Session Storage is also part of the Web Storage API and provides the 
+same functionality as Local Storage, 
+but with a shorter lifespan.
+Data stored in Session Storage is cleared when the page session ends, 
+which typically happens when the browser or tab is closed.
+
+#### Characteristics
+- **Size Limit**: Similar to Local Storage, typically around 5-10 MB per origin.
+- **Persistence**: Data persists only for the duration of the page session 
+(until the tab or browser is closed).
+- **Accessibility**: Data is accessible only within the same origin and browser tab.
+
+#### Example
+```javascript
+// Storing data
+sessionStorage.setItem('sessionId', '123456');
+
+// Retrieving data
+const sessionId = sessionStorage.getItem('sessionId');
+console.log(sessionId); // Output: "123456"
+
+// Deleting data
+sessionStorage.removeItem('sessionId');
+
+// Clearing all data
+sessionStorage.clear();
+```
+
+### Comparing Browser Storage Options
+
+| Feature                | Cookies                            | Local Storage               | Session Storage             
+|------------------------|------------------------------------|-----------------------------|-----------------------------
+| **Data Size Limit**     | ~4 KB per cookie                   | ~5-10 MB per origin         | ~5-10 MB per origin         
+| **Persistence**         | Configurable via expiration date   | Persistent                  | Until tab/browser is closed 
+| **Data Format**         | Strings only                       | Strings only                | Strings only                
+| **Scope**               | Domain and path restrictions       | Origin-wide                 | Origin-wide                 
+| **Security**            | Can be `HttpOnly` and `Secure`     | Accessible via JavaScript   | Accessible via JavaScript   
+| **Use Cases**           | Session management, tracking       | User preferences, settings  | Temporary state storage     
+
+### Security Considerations
+
+- **XSS Attacks**: All client-side storage mechanisms are vulnerable to cross-site scripting (XSS) attacks if proper security measures aren't in place. Always validate and sanitize user input, and avoid storing sensitive data on the client side if possible.
+  
+- **Same-Origin Policy**: Most storage mechanisms adhere to the same-origin policy, meaning data stored in one origin (protocol, domain, port) cannot be accessed by another. This is crucial for maintaining data security.
+
+- **Secure Contexts**: Certain features (like cookies marked as `Secure`, or some aspects of IndexedDB) may require the use of HTTPS to ensure secure data transmission.
+
+### Summary
+
+Browser storage mechanisms are essential tools for modern web development, allowing you to store data on the client-side in a variety of formats and with different lifespans. 
+Depending on the complexity of your application and the amount of data you need to store, you can choose from cookies, Local Storage, Session Storage. Each option has its own strengths and weaknesses, making it important to select the right tool for your specific use case.
+
+
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+
+A URL (Uniform Resource Locator) is a reference or address used to access resources on the internet. It is a string of characters that provides the location of a resource as well as a mechanism for retrieving it. Understanding the parts of a URL can help you navigate the web, develop web applications, and work with web technologies more effectively.
+
+### Structure of a URL
+
+A typical URL has several components, each serving a specific purpose. Here's a breakdown of the different parts of a URL:
+
+```
+scheme://username:password@hostname:port/path?query#fragment
+```
+
+### 1. **Scheme (Protocol)**
+The scheme (or protocol) specifies the protocol used to access the resource. It defines how the resource is to be fetched and how communication between the client and server is handled.
+
+- **Common Schemes**:
+  - `http`: Hypertext Transfer Protocol, used for general web traffic.
+  - `https`: Secure HTTP, used for encrypted and secure web traffic.
+  - `ftp`: File Transfer Protocol, used for transferring files.
+  - `mailto`: Used for email addresses.
+  - `file`: Refers to files on the local system.
+
+- **Example**:
+  ```
+  https://www.example.com
+  ```
+
+### 2. **Username and Password (Optional)**
+The username and password are optional parts of a URL and are used for basic authentication when accessing certain resources that require credentials. They are separated by a colon (`:`) and followed by an `@` symbol.
+
+- **Example**:
+  ```
+  ftp://user:password@ftp.example.com
+  ```
+
+- **Security Note**: Including credentials in a URL is not recommended because it can expose sensitive information.
+
+### 3. **Hostname (Domain)**
+The hostname (or domain) specifies the server where the resource is located. 
+This can be a domain name (like `www.example.com`) or an IP address (like `192.168.1.1`).
+
+- **Subdomains**: A hostname can include subdomains (like `blog.example.com`), which are prefixes to the main domain name and indicate different sections or services within the domain.
+
+- **Example**:
+  ```
+  https://www.example.com
+  ```
+
+### 4. **Port (Optional)**
+The port is an optional part of a URL that specifies the port number on the server to connect to. If omitted, the browser uses the default port for the scheme (e.g., port 80 for HTTP and port 443 for HTTPS).
+
+- **Example**:
+  ```
+  http://www.example.com:8080
+  ```
+
+  Here, `8080` is the port number.
+
+### 5. **Path**
+The path specifies the exact location of the resource on the server. It usually corresponds to the directory structure on the server and is separated by slashes (`/`). The path can include filenames or directories.
+
+- **Example**:
+  ```
+  https://www.example.com/about/team.html
+  ```
+
+  Here, `/about/team.html` is the path to the `team.html` file in the `about` directory.
+
+### 6. **Query String (Optional)**
+The query string provides additional parameters to the resource. It begins with a question mark (`?`) and consists of key-value pairs separated by `&`. Query strings are commonly used in GET requests to pass data to the server, such as search queries or form submissions.
+
+- **Example**:
+  ```
+  https://www.example.com/search?user id=1
+  ```
+
+  Here, `q=URL+structure` and `page=2` are query parameters.
+
+- **Encoding**: Special characters in query strings (e.g., spaces) must be URL-encoded. For example, 
+a space is encoded as `%20` or `+`.
+
+### 7. **Fragment (Optional)**
+The fragment (also known as the anchor or hash) is an optional part of a URL that refers to a specific section within the resource, such as a particular section of a webpage. It begins with a `#` symbol.
+
+- **Example**:
+  ```
+  https://www.example.com/about/team.html#contact
+  ```
+
+  Here, `#contact` refers to a specific section within the `team.html` page.
+
+- **Note**: The fragment is never sent to the server; it is processed entirely by the client (browser).
+
+### Putting It All Together
+
+Here's an example of a complete URL with all components:
+
+```
+https://www.example.com:8080/path/to/resource.html?query=value#section
+```
+
+- **Scheme**: `https`
+- **Hostname**: `www.example.com`
+- **Port**: `8080`
+- **Path**: `/path/to/resource.html`
+- **Query String**: `?query=value`
+- **Fragment**: `#section`
+
+### Special Types of URLs
+
+1. **Relative URLs**: A relative URL omits the scheme and domain, making it relative to the current page's URL.
+   - Example: `/about` would refer to the `/about` path on the current domain.
+
+2. **Data URLs**: These are used to embed small data items directly into a URL.
+   - Example: `data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==` (which encodes "Hello, World!" in Base64).
+
+3. **Mailto URLs**: Used to create links that open the user's email client.
+   - Example: `mailto:someone@example.com?subject=Hello%20World`
+
+### Summary
+
+- **Scheme**: Defines the protocol for accessing the resource.
+- **Username/Password**: Used for authentication, though rarely seen in modern URLs.
+- **Hostname**: The domain or IP address of the server hosting the resource.
+- **Port**: Specifies a particular port on the server (default ports are usually inferred).
+- **Path**: Defines the location of the resource on the server.
+- **Query String**: Provides additional parameters or data to the resource.
+- **Fragment**: Refers to a specific part of the resource, typically within a document.
