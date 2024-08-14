@@ -1,0 +1,269 @@
+JavaScript provides a few methods to convert strings into numbers, such as `parseInt`, `parseFloat`, `Number`, and others. Here's a detailed explanation of these methods:
+
+### 1. `parseInt()`
+
+The `parseInt()` function parses a string and returns an integer. It can also accept a second argument, known as the `radix`, which specifies the base of the numerical system to use.
+
+#### Syntax:
+```javascript
+parseInt(string, radix);
+```
+
+- **string:** The value to be parsed. If the first character cannot be converted to a number, `NaN` is returned.
+- **radix:** An integer between 2 and 36 that represents the base of the number system. If not provided, it defaults to 10 (decimal).
+
+#### Examples:
+```javascript
+parseInt('42');       // Returns 42 (base 10)
+parseInt('1011', 2);  // Returns 11 (base 2, binary)
+parseInt('10', 16);   // Returns 16 (base 16, hexadecimal)
+parseInt('08');       // Returns 8 (base 10, leading zero does not imply octal)
+parseInt('abc');      // Returns NaN (cannot convert non-numeric characters)
+```
+
+### 2. `parseFloat()`
+
+The `parseFloat()` function parses a string and returns a floating-point number (a number with a decimal point). Unlike `parseInt()`, it does not take a `radix` argument.
+
+#### Syntax:
+```javascript
+parseFloat(string);
+```
+
+- **string:** The value to be parsed. If the first character cannot be converted to a number, `NaN` is returned.
+
+#### Examples:
+```javascript
+parseFloat('3.14');    // Returns 3.14
+parseFloat('10.00');   // Returns 10
+parseFloat('3.14abc'); // Returns 3.14 (parses until a non-numeric character is found)
+parseFloat('abc');     // Returns NaN
+```
+
+### 3. `Number()`
+
+The `Number()` function converts a value (string, boolean, or another number type) into a number. Unlike `parseInt` and `parseFloat`, `Number()` converts the entire string and is stricter in what it accepts.
+
+#### Syntax:
+```javascript
+Number(value);
+```
+
+- **value:** The value to be converted to a number.
+
+#### Examples:
+```javascript
+Number('123');      // Returns 123
+Number('3.14');     // Returns 3.14
+Number('123abc');   // Returns NaN (does not tolerate non-numeric characters)
+Number('');         // Returns 0 (empty string)
+Number(true);       // Returns 1
+Number(false);      // Returns 0
+```
+
+### 4. `parseInt()` vs `Number()`
+
+- **`parseInt()`** is used to parse a string and return an integer. It stops parsing at the first non-numeric character.
+- **`Number()`** converts the entire string into a number and returns `NaN` if the string contains any invalid characters for a number.
+
+#### Example:
+```javascript
+parseInt('42abc');  // Returns 42
+Number('42abc');    // Returns NaN
+```
+
+### 5. Edge Cases
+
+- **Handling Leading Zeros:**
+  ```javascript
+  parseInt('08'); // Returns 8
+  Number('08');   // Returns 8
+  ```
+  In the past, `parseInt('08')` might have been interpreted as octal, but in modern JavaScript, it's treated as base 10 unless a radix is explicitly provided.
+
+- **Empty Strings:**
+  ```javascript
+  parseInt(''); // Returns NaN
+  Number('');   // Returns 0
+  ```
+
+- **Handling Infinity:**
+  ```javascript
+  parseInt('Infinity');  // Returns NaN (not a valid number in integer parsing)
+  Number('Infinity');    // Returns Infinity
+  ```
+
+### Summary
+
+- **`parseInt()`**: Converts a string to an integer, stops parsing at the first non-numeric character, can accept a radix.
+- **`parseFloat()`**: Converts a string to a floating-point number, stops parsing at the first non-numeric character.
+- **`Number()`**: Converts an entire string (or other value) to a number, returns `NaN` if the string is not a valid number.
+
+The `Number` object is a wrapper object for working with numerical values. It provides various properties and methods that help perform operations on numbers. Here’s an overview of some of the most important `Number` methods:
+
+### 1. `Number.isFinite()`
+This method checks if the value is a finite number.
+
+**Syntax:**
+```javascript
+Number.isFinite(value);
+```
+
+**Example:**
+```javascript
+Number.isFinite(42);       // true
+Number.isFinite(Infinity); // false
+Number.isFinite('42');     // false (because '42' is a string)
+```
+
+### 2. `Number.isInteger()`
+This method checks if the value is an integer.
+
+**Syntax:**
+```javascript
+Number.isInteger(value);
+```
+
+**Example:**
+```javascript
+Number.isInteger(42);       // true
+Number.isInteger(42.5);     // false
+Number.isInteger('42');     // false
+```
+
+### 3. `Number.isNaN()`
+This method determines whether the value is `NaN` (Not-a-Number) and of type `Number`.
+
+**Syntax:**
+```javascript
+Number.isNaN(value);
+```
+
+**Example:**
+```javascript
+Number.isNaN(NaN);        // true
+Number.isNaN(42);         // false
+Number.isNaN('NaN');      // false
+```
+
+### 4. `Number.isSafeInteger()`
+This method checks if the value is a safe integer. A safe integer is an integer that can be exactly represented as an IEEE-754 double-precision number, and it falls within the range of -(2^53 - 1) to 2^53 - 1.
+
+**Syntax:**
+```javascript
+Number.isSafeInteger(value);
+```
+
+**Example:**
+```javascript
+Number.isSafeInteger(42);            // true
+Number.isSafeInteger(Math.pow(2, 53)); // false
+Number.isSafeInteger(42.5);          // false
+```
+
+### 5. `Number.parseFloat()`
+This method parses a string argument and returns a floating-point number.
+
+**Syntax:**
+```javascript
+Number.parseFloat(string);
+```
+
+**Example:**
+```javascript
+Number.parseFloat('3.14');   // 3.14
+Number.parseFloat('3.14abc'); // 3.14
+Number.parseFloat('abc3.14'); // NaN
+```
+
+### 6. `Number.parseInt()`
+This method parses a string argument and returns an integer of the specified radix or base.
+
+**Syntax:**
+```javascript
+Number.parseInt(string, radix);
+```
+
+**Example:**
+```javascript
+Number.parseInt('42', 10);   // 42 (base 10)
+Number.parseInt('1011', 2);  // 11 (binary, base 2)
+Number.parseInt('2F', 16);   // 47 (hexadecimal, base 16)
+```
+
+### 7. `Number.toExponential()`
+This method returns a string representing the number in exponential notation.
+
+**Syntax:**
+```javascript
+num.toExponential(fractionDigits);
+```
+
+**Example:**
+```javascript
+let num = 42;
+num.toExponential();     // "4.2e+1"
+num.toExponential(2);    // "4.20e+1"
+```
+
+### 8. `Number.toFixed()`
+This method formats a number using fixed-point notation, rounding to the specified number of decimal places.
+
+**Syntax:**
+```javascript
+num.toFixed(digits);
+```
+
+**Example:**
+```javascript
+let num = 3.14159;
+num.toFixed(2);    // "3.14"
+num.toFixed(5);    // "3.14159"
+num.toFixed(0);    // "3"
+```
+
+### 9. `Number.toPrecision()`
+This method formats a number to a specified length.
+
+**Syntax:**
+```javascript
+num.toPrecision(precision);
+```
+
+**Example:**
+```javascript
+let num = 3.14159;
+num.toPrecision(2);    // "3.1"
+num.toPrecision(4);    // "3.142"
+num.toPrecision(6);    // "3.14159"
+```
+
+### 10. `Number.toString()`
+This method returns a string representing the specified number in the specified base (radix).
+
+**Syntax:**
+```javascript
+num.toString(radix);
+```
+
+**Example:**
+```javascript
+let num = 255;
+num.toString(10);    // "255" (decimal)
+num.toString(16);    // "ff" (hexadecimal)
+num.toString(2);     // "11111111" (binary)
+```
+
+### 11. `Number.valueOf()`
+This method returns the primitive value of a `Number` object.
+
+**Syntax:**
+```javascript
+num.valueOf();
+```
+
+**Example:**
+```javascript
+let num = new Number(42);
+num.valueOf();    // 42
+```

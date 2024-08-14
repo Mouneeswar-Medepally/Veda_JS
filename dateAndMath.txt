@@ -1,0 +1,125 @@
+### JavaScript `Date` Object
+
+The `Date` object in JavaScript is used to work with dates and times. It can represent a specific moment in time down to the millisecond.
+
+#### Creating Date Objects
+
+1. **Current Date and Time:**
+   ```javascript
+   let now = new Date();
+   ```
+   This creates a `Date` object for the current date and time.
+
+2. **Specific Date and Time:**
+   ```javascript
+   let specificDate = new Date('August 13, 2024 14:30:00');
+   ```
+   You can also use:
+   ```javascript
+   let anotherDate = new Date(2024, 7, 13, 14, 30, 0); // Month is 0-indexed (7 is August)
+   ```
+
+3. **Milliseconds since Epoch (January 1, 1970):**
+   ```javascript
+   let fromEpoch = new Date(1691935800000);
+   ```
+
+#### Date Methods
+
+- **Getting Date Components:**
+  ```javascript
+  let year = now.getFullYear(); // Returns 2024
+  let month = now.getMonth(); // Returns 0-11 (0 is January)
+  let day = now.getDate(); // Returns 1-31
+  let hours = now.getHours(); // Returns 0-23
+  let minutes = now.getMinutes(); // Returns 0-59
+  let seconds = now.getSeconds(); // Returns 0-59
+  let milliseconds = now.getMilliseconds(); // Returns 0-999
+  let dayOfWeek = now.getDay(); // Returns 0-6 (0 is Sunday)
+  ```
+
+- **Setting Date Components:**
+  ```javascript
+  now.setFullYear(2025);
+  now.setMonth(11); // Set to December (month is 0-indexed)
+  now.setDate(25); // Set the day to 25th
+  now.setHours(15); // Set hour to 15 (3 PM)
+  now.setMinutes(45); // Set minutes to 45
+  now.setSeconds(30); // Set seconds to 30
+  ```
+
+- **Other Useful Methods:**
+  ```javascript
+  let timestamp = now.getTime(); // Returns the number of milliseconds since the UNIX epoch
+  let isoString = now.toISOString(); // Returns ISO 8601 formatted string
+  ```
+
+### JavaScript `Math` Object
+
+The `Math` object in JavaScript is a built-in object that provides properties and methods for mathematical constants and functions. It is not a constructor, so all its properties and methods are static.
+
+#### Math Properties
+
+- **Constants:**
+  ```javascript
+  Math.PI;       // Returns the value of π (3.14159...)
+  Math.E;        // Returns Euler's number (2.718...)
+  Math.LN2;      // Returns the natural logarithm of 2
+  Math.LN10;     // Returns the natural logarithm of 10
+  Math.SQRT2;    // Returns the square root of 2
+  ```
+
+#### Math Methods
+
+- **Rounding Numbers:**
+  ```javascript
+  Math.round(4.7); // Returns 5 (rounds to the nearest integer)
+  Math.ceil(4.1);  // Returns 5 (rounds up)
+  Math.floor(4.9); // Returns 4 (rounds down)
+  ```
+
+- **Absolute Value:**
+  ```javascript
+  Math.abs(-5); // Returns 5
+  ```
+
+- **Power and Roots:**
+  ```javascript
+  Math.pow(2, 3);  // Returns 8 (2 raised to the power of 3)
+  Math.sqrt(16);   // Returns 4 (square root of 16)
+  ```
+
+- **Trigonometric Functions:**
+  ```javascript
+  Math.sin(Math.PI / 2);  // Returns 1 (sine of 90 degrees)
+  Math.cos(0);            // Returns 1 (cosine of 0 degrees)
+  Math.tan(Math.PI / 4);  // Returns 1 (tangent of 45 degrees)
+  ```
+
+- **Minimum and Maximum:**
+  ```javascript
+  Math.min(5, 10, -3); // Returns -3 (smallest number)
+  Math.max(5, 10, -3); // Returns 10 (largest number)
+  ```
+
+- **Random Numbers:**
+  ```javascript
+  Math.random(); // Returns a random number between 0 (inclusive) and 1 (exclusive)
+  ```
+  To generate a random integer within a range:
+  ```javascript
+  let randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
+  ```
+
+- **Exponential and Logarithmic Functions:**
+  ```javascript
+  Math.exp(1);   // Returns Euler's number raised to the power of 1
+  Math.log(10);  // Returns the natural logarithm (base E) of 10
+  ```
+
+### Summary
+
+- **`Date` Object:** Used for handling and manipulating dates and times.
+- **`Math` Object:** Provides mathematical functions and constants.
+
+These objects are essential in JavaScript for dealing with time-related operations and mathematical calculations, making them fundamental tools for web development.
