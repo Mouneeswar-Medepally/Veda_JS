@@ -197,13 +197,15 @@ Flags modify the behavior of the regex. Common flags include:
 - `m`: Multi-line search
 
 ### 4. Common Regex Patterns
-
 - `^`: Matches the beginning of the string
 - `$`: Matches the end of the string
 - `.`: Matches any character except newline
 - `*`: Matches 0 or more occurrences of the preceding element
 - `+`: Matches 1 or more occurrences of the preceding element
 - `?`: Matches 0 or 1 occurrence of the preceding element
+  let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  ^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$
+  /\d+/g
 - `\d`: Matches any digit (equivalent to `[0-9]`)
 - `\w`: Matches any word character (alphanumeric plus underscore)
 - `\s`: Matches any whitespace character (space, tab, newline)
@@ -220,7 +222,8 @@ Flags modify the behavior of the regex. Common flags include:
    console.log(regex.test('Hello world'));  // true
    ```
 
-2. **`exec`**: Executes a search for a match in a string. Returns an array of matched results or `null`.
+2. **`exec`**: Executes a search for a match in a string. 
+Returns an array of matched results or `null`.
    ```javascript
    let regex = /hello/i;
    let result = regex.exec('Hello world');
@@ -303,3 +306,11 @@ Flags modify the behavior of the regex. Common flags include:
    console.log(isStrongPassword('Aa1@strong'));  // true
    console.log(isStrongPassword('weakpass'));    // false
    ```
+
+
+^ and $: Anchors the pattern to the start and end of the string.
+[\w\.-]+: Matches one or more word characters (\w includes letters, digits, and underscores), dots (.), or hyphens (-).
+@: Matches the "@" symbol.
+[a-zA-Z\d\.-]+: Matches one or more letters, digits, dots, or hyphens.
+\.: Matches a literal dot.
+[a-zA-Z]{2,}: Matches at least two letters (for domain extensions like .com, .net, etc.).

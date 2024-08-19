@@ -1,3 +1,4 @@
+// 'use strict';
 const form = document.forms[0];
 const errorElement=document.querySelector('#errorText')
 // const formData = new FormData(form);
@@ -12,11 +13,23 @@ const errorElement=document.querySelector('#errorText')
 // console.log(formData.get('username'))
 // console.log(formData.get('userName');
 
-// const userName=form.elements['userName']
+const email=form.elements['email']
+const emailValidation=(value)=>{
+    if(!value){
+        errorElement.textContent="Email required!"
+        return
+    }
+    const emailPattern=/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+    if(!emailPattern.test(value)){
+        errorElement.textContent="Email is invalid!"
+        return
+    }
+    errorElement.textContent=''
+}
 // const password=form.elements['password'];
-// userName.addEventListener('keydown',(e)=>{
-//     console.log(e.target.value)
-// })
+email.addEventListener('input',(e)=>{
+    emailValidation(e.target.value)
+})
 // password.addEventListener('keydown',(e)=>{
 //     console.log(e.target.value)
 // })
@@ -54,15 +67,20 @@ const errorElement=document.querySelector('#errorText')
 //        console.log(e.target)
 //     })
 
-form.addEventListener('submit',(e)=>{
-    e.preventDefault()
-    const formData = new FormData(e.target);
-    for(let [key,value] of formData.entries()){
-        if(key==='userName' && !value){
-            errorElement.textContent="User Name required!"
-        }
-        if(key==='password' && !value){
-             errorElement.textContent="Password required!"
-        }
-    }
-})
+// form.addEventListener('submit',(e)=>{
+//     e.preventDefault()
+//     const formData = new FormData(e.target);
+//     for(let [key,value] of formData.entries()){
+//         if(key==='email'){
+//             emailValidation(value)
+//         }
+//         // if(key==='password' && !value){
+//         //      errorElement.textContent="Password required!"
+//         // }
+//     }
+// })
+
+const x='hello'
+console.log(x)
+const for='abc';
+console.log(for)

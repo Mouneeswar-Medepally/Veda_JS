@@ -61,7 +61,8 @@ with features like pull requests, issue tracking, and project management tools.
    ```bash
    git add <file-name>
    ```
-   - Adds the specified file(s) to the staging area. Use `git add .` to stage all changed files.
+   - Adds the specified file(s) to the staging area. 
+   Use `git add .` to stage all changed files.
 
 #### 5. **Commit Changes:**
    ```bash
@@ -84,6 +85,7 @@ with features like pull requests, issue tracking, and project management tools.
 #### 8. **Switch to a Branch:**
    ```bash
    git checkout <branch-name>
+   git switch <branch-name>
    ```
    - Switches to the specified branch.
 
