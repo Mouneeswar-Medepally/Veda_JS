@@ -1,0 +1,153 @@
+### **AJAX (Asynchronous JavaScript and XML)**
+
+**AJAX** is a web development technique used to create asynchronous web applications. 
+The core idea behind AJAX is to allow web pages to be updated asynchronously 
+by exchanging small amounts of data with the server behind the scenes.
+This means that it is possible to update parts of a web page, 
+without reloading the entire page.
+
+#### **Key Concepts of AJAX:**
+1. **Asynchronous Communication:** AJAX allows asynchronous communication with the 
+server, meaning that web pages can update data in the background 
+without interfering with the current state of the page.
+  
+2. **Data Formats:** While AJAX stands for Asynchronous JavaScript and XML, 
+the data sent between client and server can be in various formats 
+such as JSON (most common), XML, HTML, or plain text.
+
+3. **Browser Compatibility:** AJAX is implemented 
+using the `XMLHttpRequest` object, which is available in most modern browsers.
+
+### **XMLHttpRequest**
+
+The `XMLHttpRequest` object is the backbone of AJAX. 
+It provides the ability to perform HTTP requests to a server and 
+process the server's response.
+
+#### **Key Properties of `XMLHttpRequest`:**
+- **readyState:** Indicates the state of the request (from `0` to `4`).
+  - `0`: UNSENT - The request is not initialized.
+  - `1`: OPENED - The request has been set up.
+  - `2`: HEADERS_RECEIVED - The request has been sent, and the headers have been received.
+  - `3`: LOADING - The request is in process and the response is being received.
+  - `4`: DONE - The request has been completed, and the response is ready.
+
+- **status:** The HTTP status code of the response (e.g., `200` for success, `404` for not found).
+
+- **statusText:** The HTTP status text corresponding to the `status` code (e.g., "OK" for `200`).
+
+- **responseText:** The response data as a string.
+
+- **responseXML:** The response data as an XML document (if the response is XML).
+
+- **responseURL:** The URL of the response.
+
+- **responseType:** The type of response expected (e.g., `"text"`, `"document"`, `"json"`, `"blob"`, `"arraybuffer"`).
+
+- **onreadystatechange:** An event handler for an event that fires whenever the `readyState` changes.
+
+#### **Key Methods of `XMLHttpRequest`:**
+
+1. **open(method, url, async, user, password):**
+   - Initializes a newly-created request or re-initializes an existing one.
+   - `method`: The HTTP method to use (e.g., `"GET"`, `"POST"`).
+   - `url`: The URL to send the request to.
+   - `async` (optional): If `true` (default), the request is asynchronous. If `false`, the request is synchronous.
+   - `user` (optional): The username for authentication (if required).
+   - `password` (optional): The password for authentication (if required).
+
+2. **send(body):**
+   - Sends the request to the server. The `body` can contain the request payload for methods like `"POST"`. If no payload is needed, `null` can be passed.
+
+3. **abort():**
+   - Cancels the request. If the request has already been sent, `abort()` can be used to cancel it.
+
+4. **setRequestHeader(header, value):**
+   - Sets the value of an HTTP request header.
+   - `header`: The name of the header (e.g., `"Content-Type"`).
+   - `value`: The value to set for the header.
+
+5. **getResponseHeader(header):**
+   - Returns the string containing the text of a particular header in the response.
+   - `header`: The name of the header to retrieve.
+
+6. **getAllResponseHeaders():**
+   - Returns all response headers as a string, with each header line separated by a pair of CRLF (carriage return and line feed).
+
+7. **overrideMimeType(mimeType):**
+   - Overrides the MIME type returned by the server.
+   - `mimeType`: The MIME type to use (e.g., `"text/plain"`).
+
+8. **timeout:**
+   - Sets the time in milliseconds a request can take before automatically being terminated.
+
+9. **withCredentials:**
+   - Indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies or authorization headers.
+
+10. **responseType:**
+   - Defines the type of data that you expect from the server. The available values are `"arraybuffer"`, `"blob"`, `"document"`, `"json"`, and `"text"`.
+
+### **Example of Using `XMLHttpRequest`:**
+
+```javascript
+// Create a new XMLHttpRequest object
+var xhr = new XMLHttpRequest();
+
+// Configure it: GET-request for the URL /article/.../load
+xhr.open('GET', '/article/.../load', true);
+
+// Set up what to do when the request is completed
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    // Response is ready and status is OK
+    console.log(xhr.responseText);
+  }
+};
+
+// Send the request
+xhr.send();
+```
+
+### **Advanced Usage:**
+
+- **Handling JSON Responses:**
+  ```javascript
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.example.com/data', true);
+  xhr.responseType = 'json';
+
+  xhr.onload = function() {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      // Successfully received response
+      console.log(xhr.response);
+    }
+  };
+
+  xhr.send();
+  ```
+
+- **Sending Data with `POST`:**
+  ```javascript
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/submit-data', true);
+  xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      console.log(xhr.responseText);
+    }
+  };
+
+  var data = JSON.stringify({ name: "John", age: 30 });
+  xhr.send(data);
+  ```
+
+### **Limitations of `XMLHttpRequest`:**
+- **CORS Issues:** Cross-Origin Resource Sharing (CORS) restrictions can cause issues when making requests to a different domain.
+- **Verbose API:** Compared to newer APIs like `fetch()`, `XMLHttpRequest` is more verbose and less intuitive.
+- **No Promises:** `XMLHttpRequest` does not support Promises natively, making it harder to work with modern JavaScript async patterns.
+
+### **Modern Alternatives:**
+
+- **Fetch API:** A modern, Promise-based alternative to `XMLHttpRequest`.
+- **Axios:** A popular third-party library that simplifies HTTP requests.
